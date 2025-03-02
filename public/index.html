@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Bot Telegram</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <i class="fab fa-telegram logo" style="font-size: 28px; color: #3390ec;"></i>
+        <h1>Bot Manager</h1>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#messages" class="nav-item active">
+          <i class="fas fa-paper-plane"></i>
+          <span>Tin nhắn</span>
+        </a>
+        <a href="#groups" class="nav-item">
+          <i class="fas fa-users"></i>
+          <span>Nhóm</span>
+        </a>
+        <a href="#settings" class="nav-item">
+          <i class="fas fa-cog"></i>
+          <span>Cài đặt</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <span>Dashboard v1.0</span>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="bot-info">
+          <h2 id="botName">Bot Telegram</h2>
+          <div id="botStatus" class="bot-status">
+            <span class="status-indicator online"></span>
+            <span class="status-text">Đang hoạt động</span>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button id="addGroupBtn" class="btn btn-secondary">
+            <i class="fas fa-plus"></i> Thêm nhóm
+          </button>
+        </div>
+      </header>
+      
+      <div class="content-area">
+        <!-- Danh sách nhóm -->
+        <div class="card">
+          <div class="card-header">
+            <h2><i class="fas fa-users"></i> Danh sách nhóm</h2>
+          </div>
+          
+          <div class="group-selector">
+            <div id="groupList" class="group-list">
+              <!-- Nhóm sẽ được thêm vào đây bằng JavaScript -->
+              <div class="no-groups">
+                Chưa có nhóm nào. Vui lòng thêm nhóm mới để bắt đầu gửi tin nhắn.
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Soạn tin nhắn -->
+        <div class="card">
+          <div class="card-header">
+            <h2><i class="fas fa-edit"></i> Soạn tin nhắn</h2>
+          </div>
+          
+          <div class="card-body">
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="text-tab">Tin nhắn văn bản</button>
+              <button class="tab-btn" data-tab="image-tab">Tin nhắn hình ảnh</button>
+            </div>
+            
+            <!-- Tab tin nhắn văn bản -->
+            <div id="text-tab" class="tab-pane active">
+              <form id="text-form">
+                <div class="form-group">
+                  <label for="groupSelect">Chọn nhóm</label>
+                  <select id="groupSelect" class="form-control" required>
+                    <option value="">-- Chọn nhóm --</option>
+                    <!-- Danh sách nhóm sẽ được thêm vào đây bằng JavaScript -->
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="title">Tiêu đề</label>
+                  <input type="text" id="title" class="form-control" placeholder="Nhập tiêu đề tin nhắn..." required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="content">Nội dung</label>
+                  <textarea id="content" class="form-control" placeholder="Nhập nội dung tin nhắn..." rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="button-text">Văn bản nút (tùy chọn)</label>
+                  <input type="text" id="button-text" class="form-control" placeholder="Ví dụ: Tải ngay">
+                </div>
+                
+                <div class="form-group">
+                  <label for="button-url">URL nút (tùy chọn)</label>
+                  <input type="url" id="button-url" class="form-control" placeholder="https://t.me/your_bot">
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" id="preview-text-btn" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i> Xem trước
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                  </button>
+                </div>
+              </form>
+              
+              <div id="text-preview" class="preview-container">
+                <!-- Xem trước tin nhắn văn bản sẽ được hiển thị ở đây -->
+              </div>
+            </div>
+            
+            <!-- Tab tin nhắn hình ảnh -->
+            <div id="image-tab" class="tab-pane">
+              <form id="image-form">
+                <div class="form-group">
+                  <label for="imageGroupSelect">Chọn nhóm</label>
+                  <select id="imageGroupSelect" class="form-control" required>
+                    <option value="">-- Chọn nhóm --</option>
+                    <!-- Danh sách nhóm sẽ được thêm vào đây bằng JavaScript -->
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="image-url">URL hình ảnh</label>
+                  <input type="url" id="image-url" class="form-control" placeholder="https://example.com/image.jpg" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="caption">Chú thích (tùy chọn)</label>
+                  <textarea id="caption" class="form-control" placeholder="Nhập chú thích cho hình ảnh..." rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="image-button-text">Văn bản nút (tùy chọn)</label>
+                  <input type="text" id="image-button-text" class="form-control" placeholder="Ví dụ: Xem thêm">
+                </div>
+                
+                <div class="form-group">
+                  <label for="image-button-url">URL nút (tùy chọn)</label>
+                  <input type="url" id="image-button-url" class="form-control" placeholder="https://t.me/your_bot">
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" id="preview-image-btn" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i> Xem trước
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                  </button>
+                </div>
+              </form>
+              
+              <div id="image-preview" class="preview-container">
+                <!-- Xem trước tin nhắn hình ảnh sẽ được hiển thị ở đây -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Kết quả -->
+        <div id="result" class="result" style="display: none;">
+          <!-- Kết quả gửi tin nhắn sẽ hiển thị ở đây -->
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Modal thêm nhóm -->
+  <div id="addGroupModal" class="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Thêm nhóm mới</h3>
+        <button class="modal-close" data-dismiss="modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addGroupForm">
+          <div class="form-group">
+            <label for="groupId">ID Nhóm</label>
+            <input type="text" id="groupId" class="form-control" placeholder="-100123456789" required>
+            <small class="form-text">Nhập ID nhóm Telegram. Bot phải là admin trong nhóm này.</small>
+          </div>
+          <div class="form-group">
+            <label for="groupTitle">Tên nhóm (tùy chọn)</label>
+            <input type="text" id="groupTitle" class="form-control" placeholder="Nhập tên nhóm">
+            <small class="form-text">Nếu để trống, tên nhóm sẽ được lấy từ Telegram.</small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        <button id="saveGroupBtn" class="btn btn-primary">Lưu nhóm</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast Notifications -->
+  <div id="toastContainer" class="toast-container"></div>
+  
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+</body>
+</html>
