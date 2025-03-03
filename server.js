@@ -9,6 +9,13 @@ const fs = require('fs');
 const token = process.env.BOT_TOKEN;
 const PORT = process.env.PORT || 3000;
 
+// Kiểm tra token
+if (!token) {
+  console.error('Không tìm thấy BOT_TOKEN trong tệp .env');
+  console.error('Vui lòng tạo tệp .env và thêm BOT_TOKEN=your_telegram_bot_token');
+  process.exit(1);
+}
+
 // Khởi tạo bot Telegram
 const bot = new TelegramBot(token, { polling: true });
 
@@ -90,8 +97,7 @@ app.post('/api/groups', (req, res) => {
         // Thêm nhóm mới
         groups.push({
           id: groupId,
-          title: groupTitle || chatInfo.title || `Nhóm ${groupId}`,
-          isActive: true
+          title: groupTitle || chatInfo.title || `Nhóm ${groupId}`
         });
         
         // Lưu danh sách
@@ -146,21 +152,18 @@ app.post('/api/send-message', (req, res) => {
     });
   }
   
-  // URL mặc định nếu không được cung cấp
-  const url = buttonUrl || 'https://t.me/';
-  
   // Cấu hình nút nếu được cung cấp
   const options = {
     parse_mode: 'HTML'
   };
   
-  if (buttonText) {
+  if (buttonText && buttonUrl) {
     options.reply_markup = {
       inline_keyboard: [
         [
           {
             text: buttonText,
-            url: url
+            url: buttonUrl
           }
         ]
       ]
@@ -190,22 +193,19 @@ app.post('/api/send-image', (req, res) => {
     });
   }
   
-  // URL mặc định nếu không được cung cấp
-  const url = buttonUrl || 'https://t.me/';
-  
   // Cấu hình nút nếu được cung cấp
   const options = {
     parse_mode: 'HTML',
-    caption: caption || ''
+    caption: caption ? `<b>${caption}</b>` : ''
   };
   
-  if (buttonText) {
+  if (buttonText && buttonUrl) {
     options.reply_markup = {
       inline_keyboard: [
         [
           {
             text: buttonText,
-            url: url
+            url: buttonUrl
           }
         ]
       ]
@@ -233,4 +233,5 @@ bot.on('message', (msg) => {
 // Khởi động server
 app.listen(PORT, () => {
   console.log(`Server đang chạy tại http://localhost:${PORT}`);
+  console.log('Dashboard Bot Telegram đã sẵn sàng!');
 });

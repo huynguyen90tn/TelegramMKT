@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "-1002251413743",
+    "title": "MSCI Chanel",
+    "isActive": true
+  },
+  {
+    "id": "-1002185965357",
+    "title": "M-Sci Group Chat",
+    "isActive": true
+  },
+  {
+    "id": "-1002304997800",
+    "title": "TNG Chat"
+  }
+]

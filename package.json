@@ -19,5 +19,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daisylaps/telegramapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/daisylaps/telegramapp/issues"
+  },
+  "homepage": "https://github.com/daisylaps/telegramapp#readme"
 }
